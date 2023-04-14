@@ -12,6 +12,7 @@ func preorderTraversal(root *TreeNode) []int {
 	return res
 }
 
+/*
 func traversal(root *TreeNode)  {
 	if root == nil {
 		return
@@ -23,3 +24,4 @@ func traversal(root *TreeNode)  {
 	traversal(root.Right)
 	//后序遍历
 }
+*/
