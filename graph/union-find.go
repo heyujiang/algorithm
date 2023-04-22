@@ -43,7 +43,7 @@ func (u *UF) find(x int) int {
 	//}
 	//return x
 
-	for u.parent[x] != x { //优化后 将一颗树压平只有两层
+	if u.parent[x] != x { //优化后 将一颗树压平只有两层
 		u.parent[x] = u.find(u.parent[x])
 	}
 	return u.parent[x]
