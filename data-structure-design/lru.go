@@ -90,6 +90,10 @@ func (l *LRUCache) Put(key, val int) {
 	l.addRecently(key, val) //添加缓存的key-val
 }
 
+func (l *LRUCache) Size() int {
+	return l.cache.getSize()
+}
+
 func (l *LRUCache) makeRecently(key int) { //提升为最近使用
 	x := l.km[key]
 	l.cache.remove(x)
