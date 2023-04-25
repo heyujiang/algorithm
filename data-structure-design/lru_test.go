@@ -39,7 +39,7 @@ func TestNewLRU(t *testing.T) {
 	printCache(lru)
 }
 
-func printCache(lru *LRU) {
+func printCache(lru *LRUCache) {
 	head := lru.cache.head.next
 	for head != lru.cache.tail {
 		fmt.Println(head)
@@ -47,4 +47,31 @@ func printCache(lru *LRU) {
 	}
 	fmt.Println(lru.km)
 	fmt.Println("+++++++++++++++++++++")
+}
+
+func TestAA(t *testing.T) {
+	a := []int{1, 2, 3, 4}
+	for _, v := range a {
+		fmt.Println(v)
+		v = 4
+	}
+	fmt.Println(a)
+
+	type node struct {
+		val int
+	}
+
+	b := []*node{&node{val: 1}, &node{val: 2}}
+	for _, v := range b {
+		fmt.Println(v)
+		v.val = 5
+	}
+	for _, v := range b {
+		fmt.Println(v)
+	}
+
+	for i := range a {
+		a[i] = 5
+	}
+	fmt.Println(a)
 }
