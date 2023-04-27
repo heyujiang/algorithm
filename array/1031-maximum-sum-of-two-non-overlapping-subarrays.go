@@ -1,34 +1,25 @@
 package array
 
-import "fmt"
-
 //1031. 两个非重叠子数组的最大和(https://leetcode.cn/problems/maximum-sum-of-two-non-overlapping-subarrays)
-func maxSumTwoNoOverlap(nums []int, firstLen int, secondLen int) int {
-	sums := make([]int, len(nums)+1)
-	for i := 0; i < len(nums); i++ {
-		sums[i+1] = sums[i] + nums[i]
+func maxSumTwoNoOverlap(nums []int, firstLen, secondLen int) (ans int) {
+	n := len(nums)
+	s := make([]int, n+1)
+	for i, x := range nums {
+		s[i+1] = s[i] + x // 计算 nums 的前缀和
 	}
-	maxSum := 0
-	for i := 0; i <= len(nums)-firstLen; i++ {
-		firstSum := sums[i+firstLen] - sums[i]
-		for j := i + firstLen; j <= len(nums)-secondLen; j++ {
-			secondSum := sums[j+secondLen] - sums[j]
-			if firstSum+secondSum > maxSum {
-				maxSum = firstSum + secondSum
-			}
-		}
+	maxSumA, maxSumB := 0, 0
+	for i := firstLen + secondLen; i <= n; i++ {
+		maxSumA = max(maxSumA, s[i-secondLen]-s[i-secondLen-firstLen])
+		maxSumB = max(maxSumB, s[i-firstLen]-s[i-firstLen-secondLen])
+		ans = max(ans, max(maxSumA+s[i]-s[i-secondLen], // 左 a 右 b
+			maxSumB+s[i]-s[i-firstLen])) // 左 b 右 a
 	}
+	return
+}
 
-	for i := 0; i <= len(nums)-secondLen; i++ {
-		secondSum := sums[i+secondLen] - sums[i]
-		for j := i + secondLen; j <= len(nums)-firstLen; j++ {
-			firstSum := sums[j+firstLen] - sums[j]
-			if firstSum+secondSum > maxSum {
-				maxSum = firstSum + secondSum
-				fmt.Println(i, j)
-			}
-		}
+func max(a, b int) int {
+	if b > a {
+		return b
 	}
-
-	return maxSum
+	return a
 }
