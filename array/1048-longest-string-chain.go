@@ -3,8 +3,9 @@ package array
 import "sort"
 
 //1048. 最长字符串链 (https://leetcode.cn/problems/longest-string-chain/)
+//
 //现将字符串按长度从小到大排序
-//将单词去掉一个字母即为此单词在词链中的前身 所以此单词的词链长度为前身的词链长度； 多个取最大的
+//将单词去掉一个字母即为此单词在词链中的前身 所以此单词的词链长度为前身的词链长度； 多个取最大的  （动态规划思想）
 func longestStrChain(words []string) int {
 	res := 0
 	sort.Slice(words, func(i, j int) bool {
