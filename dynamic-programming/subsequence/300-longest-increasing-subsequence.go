@@ -1,4 +1,4 @@
-package LIS
+package subsequence
 
 //300. 最长递增子序列 (https://leetcode.cn/problems/longest-increasing-subsequence/)
 //动态规划解法，时间复杂度O(N^2)
