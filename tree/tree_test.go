@@ -19,3 +19,7 @@ func TestAA(t *testing.T) {
 	fmt.Println(v)
 
 }
+
+func TestFindTilt(t *testing.T) {
+	fmt.Println(findTilt(&TreeNode{1, &TreeNode{Val: 2}, &TreeNode{Val: 3}}))
+}
