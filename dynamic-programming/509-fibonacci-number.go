@@ -26,7 +26,7 @@ func fibMemo(n int) int {
 	return dp(n)
 }
 
-//自底向上 递推的方式实现  空间复杂度O(N)
+//自底向上的迭代方式实现  空间复杂度O(N)
 func fibFromBottom(n int) int {
 	if n == 0 || n == 1 {
 		return n
