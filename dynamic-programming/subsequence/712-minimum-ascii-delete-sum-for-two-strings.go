@@ -1,6 +1,7 @@
 package subsequence
 
 //712. 两个字符串的最小ASCII删除和  https://leetcode.cn/problems/minimum-ascii-delete-sum-for-two-strings/
+//自底向上迭代的动态规划方式
 func minimumDeleteSum(s1 string, s2 string) int {
 	memo := make([][]int, len(s1)+1)
 	for i := range memo {
@@ -15,10 +16,10 @@ func minimumDeleteSum(s1 string, s2 string) int {
 		memo[i][0] = memo[i-1][0] + int(s1[i-1])
 	}
 
-	for i := 0; i < len(s1); i++ { //todo : ==================================
+	for i := 0; i < len(s1); i++ {
 		for j := 0; j < len(s2); j++ {
 			if s1[i] == s2[j] {
-				memo[i+1][+1] = memo[i][i]
+				memo[i+1][j+1] = memo[i][j]
 			} else {
 				if memo[i+1][j]+int(s2[j]) < memo[i][j+1]+int(s1[i]) {
 					memo[i+1][j+1] = memo[i+1][j] + int(s2[j])
@@ -28,6 +29,7 @@ func minimumDeleteSum(s1 string, s2 string) int {
 			}
 		}
 	}
+
 	return memo[len(s1)][len(s2)]
 }
 
