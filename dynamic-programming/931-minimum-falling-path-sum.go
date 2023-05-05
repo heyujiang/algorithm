@@ -11,26 +11,26 @@ func minFallingPathSum(matrix [][]int) int {
 	if n == 0 {
 		return 0
 	}
-	m := len(matrix[0])
+
 	dp := make([][]int, n+1)
 	for i := range dp {
-		dp[i] = make([]int, m+2)
+		dp[i] = make([]int, n+2)
 		dp[i][0] = math.MaxInt32
-		dp[i][m+1] = math.MaxInt32
+		dp[i][n+1] = math.MaxInt32
 	}
 
-	for i := 1; i < m+2; i++ {
+	for i := range dp[n] {
 		dp[n][i] = math.MaxInt32
 	}
 
 	for i := 1; i <= n; i++ {
-		for j := 1; j <= m; j++ {
+		for j := 1; j <= n; j++ {
 			dp[i][j] = algorithm.Min(algorithm.Min(dp[i-1][j-1], dp[i-1][j]), dp[i-1][j+1]) + matrix[i-1][j-1]
 		}
 	}
 
 	res := math.MaxInt32
-	for i := 1; i < m+2; i++ {
+	for i := 1; i < n+2; i++ {
 		if res > dp[n][i] {
 			res = dp[n][i]
 		}
