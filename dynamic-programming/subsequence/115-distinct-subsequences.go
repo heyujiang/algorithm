@@ -1,6 +1,7 @@
 package subsequence
 
 //115. 不同的子序列 https://leetcode.cn/problems/distinct-subsequences/
+//剑指 Offer II 097. 子序列的数目 https://leetcode.cn/problems/21dk04/
 func numDistinct(s string, t string) int {
 	memo := make([][]int, len(s))
 	for i := range memo {
