@@ -3,6 +3,7 @@ package dynamic_programming
 import (
 	"fmt"
 	"github.com/heyujiang/algorithm"
+	"math"
 )
 
 //514. 自由之路  https://leetcode.cn/problems/freedom-trail/
@@ -23,7 +24,7 @@ func findRotateSteps(ring string, key string) int {
 			return memo[k]
 		}
 
-		if ring[i] == key[j] { //相同的时候才正 or 倒
+		if ring[i] == key[j] { //相同的时候才能正 or 倒
 			memo[k] = algorithm.Min(dp(ring, i, key, j+1, isZ), dp(ring, i, key, j+1, !isZ)) + 1
 		} else { //不同的时候只能一直正或倒
 			if isZ {
@@ -44,4 +45,43 @@ func findRotateSteps(ring string, key string) int {
 	}
 
 	return algorithm.Min(dp(ring, 0, key, 0, true), dp(ring, 0, key, 0, false))
+}
+
+func findRotateSteps2(ring string, key string) int {
+	n := len(ring)
+	m := len(key)
+
+	memo := make([][]int, n)
+	for i := range memo {
+		memo[i] = make([]int, m)
+	}
+
+	byteToIndex := make(map[byte][]int)
+	for i := range ring {
+		byteToIndex[ring[i]] = append(byteToIndex[ring[i]], i)
+	}
+
+	var dp func(ring string, i int, key string, j int) int
+	dp = func(ring string, i int, key string, j int) int {
+		if j == m {
+			return 0
+		}
+
+		if memo[i][j] != 0 {
+			return memo[i][j]
+		}
+
+		res := math.MaxInt32
+		for _, k := range byteToIndex[key[j]] {
+			delta := int(math.Abs(float64(k - i)))
+			delta = algorithm.Min(delta, n-delta)
+			subProblem := dp(ring, k, key, j+1)
+
+			res = algorithm.Min(res, delta+subProblem+1)
+		}
+		memo[i][j] = res
+		return memo[i][j]
+	}
+
+	return dp(ring, 0, key, 0)
 }
