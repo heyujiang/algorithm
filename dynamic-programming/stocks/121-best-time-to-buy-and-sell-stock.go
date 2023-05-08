@@ -6,7 +6,7 @@ import (
 )
 
 //121. 买卖股票的最佳时机   https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/
-
+//剑指 Offer 63. 股票的最大利润  https://leetcode.cn/problems/gu-piao-de-zui-da-li-run-lcof/
 //暴力解法 时间复杂度 O(N^2)
 func maxProfit(prices []int) int {
 	if len(prices) <= 1 {
@@ -23,6 +23,25 @@ func maxProfit(prices []int) int {
 }
 
 //动态规划解法
+/**
+K = 1
+dp[i][1][0] = max(dp[i-1][1][0],dp[i-1][1][1]+prices[i])
+dp[i][1][1] = max(dp[i-1][1][1],dp[i-1][0][0]-prices[i])
+            = max(dp[i-1][1][1],-prices[i])
+解释：k = 0的base case ，所以dp[i-1][0][0] = 0
+发现k都是1，不会改变，即k对状态转移已经没有影响了。可以进一步简化去掉k
+dp[i][0] = max(dp[i-1][0],dp[i-1][1]+prices[i])
+dp[i][1] = max(dp[i-1][1],-prices[i])
+
+当 i == 0 时：
+dp[0][0] = max(dp[-1][0],dp[-1][1] + prices[i])
+		 = max(0,-∞ + prices[i])
+		 = 0
+dp[0][1] = max(dp[-1][1],dp[-1][0] - prices[i])
+         = max(-∞,0-prices[i])
+         = -prices[i]
+*/
+
 func maxProfit2(prices []int) int {
 	n := len(prices)
 	dp := make([][2]int, n)
@@ -34,7 +53,7 @@ func maxProfit2(prices []int) int {
 		}
 
 		dp[i][0] = algorithm.Max(dp[i-1][0], dp[i-1][1]+prices[i])
-		dp[i][1] = algorithm.Max(dp[i-1][1], 0-prices[i])
+		dp[i][1] = algorithm.Max(dp[i-1][1], -prices[i])
 	}
 	return dp[n-1][0]
 }
@@ -50,6 +69,7 @@ func maxProfit2O1(prices []int) int {
 	return dp_i_0
 }
 
+//迭代+demo的动态规划方式
 func maxProfit3(prices []int) int {
 	n := len(prices)
 	memo := make([][2]int, n)
