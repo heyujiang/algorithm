@@ -5,6 +5,10 @@ import (
 	"math"
 )
 
+//213. 打家劫舍II  https://leetcode.cn/problems/house-robber-ii/
+//剑指 Offer II 090. 环形房屋偷盗  https://leetcode.cn/problems/PzWKhm/
+
+//环形房屋，那么首尾相连，那么要么偷首不偷尾、要么偷尾不偷首、要么首尾都不偷 ； 所以比较三种方式的最大值即可，首尾都不偷肯定小于另位两种方式，所以可以不同考虑了
 func robII(nums []int) int {
 	if len(nums) == 1 {
 		return nums[0]
